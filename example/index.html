@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.11.2"></script>
+  <script type="module" src="../lib/webcam.js"></script>
+  <script type="module" src="../lib/tf.js"></script>
+</head>
+<body>
+  
+  <script type="module">
+
+      import webcamUtils from '../lib/webcam.js';
+      import LearningModel from '../lib/tf.js';
+
+      let model
+      let canvas
+      let video
+  
+      (async function () {
+
+        const btn0 = document.getElementById('btn0')
+        const btn1 = document.getElementById('btn1')
+        const btnTrain = document.getElementById('train')
+        const btnStart = document.getElementById('start')
+
+        video = document.getElementById('webcam')
+        await webcamUtils.init(document.getElementById('webcam'))
+        canvas = webcamUtils.canvas
+        model = new LearningModel(2)
+        await model.initialize()
+
+        document.body.appendChild(webcamUtils.canvas)
+        document.getElementById('status').textContent = 'ready!'
+
+        btn0.onclick = btn1.onclick = function buttonHandler () {
+          webcamUtils.capture()
+          const label = parseInt(this.id.slice(3))
+          const imageData = model.captureImageFromCanvas(canvas)
+          model.sample(imageData, label)
+        }
+
+        const done = (loss) => {
+          console.log(loss)
+        }
+
+        btnTrain.onclick = function () {
+          model.train(done)
+        }
+
+        btnStart.onclick = function () {
+          detect()
+          this.remove()
+        }
+
+      })()
+
+      let x = 0
+
+      async function detect () {
+        webcamUtils.capture()
+        const imageData = model.captureImageFromCanvas(canvas)
+        const predictions = await model.test(imageData)
+        console.log(predictions)
+        x++
+        detect()
+      }
+    
+    </script>
+
+
+  <video id="webcam" height="360" width="360" autoplay></video>
+
+  <div id="status"></div>
+  <button id="btn0">Sample as item #0</button>
+  <button id="btn1">Sample as item #1</button>
+  <button id="train">Train Model</button>
+  <button id="start">Start detection</button>
+
+</body>
+</html>

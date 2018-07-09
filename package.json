@@ -1,0 +1,14 @@
+{
+  "name": "tensor-fuze",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/tf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tensorflow/tfjs": "^0.12.0"
+  }
+}
