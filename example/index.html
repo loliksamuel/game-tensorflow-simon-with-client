@@ -28,19 +28,21 @@
 
         const btn0 = document.getElementById('btn0')
         const btn1 = document.getElementById('btn1')
+        const btn2 = document.getElementById('btn2')
+        const btn3 = document.getElementById('btn3')
         const btnTrain = document.getElementById('train')
         const btnStart = document.getElementById('start')
 
         video = document.getElementById('webcam')
         await webcamUtils.init(document.getElementById('webcam'))
         canvas = webcamUtils.canvas
-        model = new LearningModel(2)
+        model = new LearningModel(4)
         await model.initialize()
 
         document.body.appendChild(webcamUtils.canvas)
         document.getElementById('status').textContent = 'ready!'
 
-        btn0.onclick = btn1.onclick = function buttonHandler () {
+        btn0.onclick = btn1.onclick = btn2.onclick = btn3.onclick = function buttonHandler () {
           webcamUtils.capture()
           const label = parseInt(this.id.slice(3))
           const imageData = model.captureImageFromCanvas(canvas)
@@ -79,8 +81,10 @@
 <!--
 
   <div id="status"></div>
-  <button id="btn0">Sample as item #0</button>
-  <button id="btn1">Sample as item #1</button>
+  <button id="btn0">Sample Pink</button>
+  <button id="btn1">Sample Yellow</button>
+  <button id="btn2">Sample Green</button>
+  <button id="btn3">Sample Orange</button>
   <button id="train">Train Model</button>
   <button id="start">Start detection</button>
 
