@@ -314,3 +314,16 @@ body {
   width: 200px;
   background-size: contain;
 }
+
+#counter {
+  display: none;
+  position: absolute;
+  top: 50%;
+  color: white;
+  padding-top: 0px;
+  transform: translateY(-50%);
+  background: gray;
+  line-height: 120px;
+  text-align: center;
+  left: calc(50% - 65px);
+}
