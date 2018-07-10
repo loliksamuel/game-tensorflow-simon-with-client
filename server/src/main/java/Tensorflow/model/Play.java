@@ -2,6 +2,8 @@ package Tensorflow.model;
 
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Play extends EntityBase{
@@ -9,6 +11,9 @@ public class Play extends EntityBase{
 
 
 
+    @ManyToOne
+    @JoinColumn(name="game_id", nullable=false)
+    private Game   game;
     private String userName;
     private int     score;
 
@@ -31,6 +36,12 @@ public class Play extends EntityBase{
         score = aScore;
     }
 
+    public Game getGame() {
+        return game;
+    }
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
 
 }
