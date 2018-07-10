@@ -2,13 +2,16 @@ package Tensorflow.model;
 
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Play extends EntityBase{
 
 
-
-
+    @ManyToOne
+    @JoinColumn(name="game_id", nullable=false)
+    private Game   game;
     private String userName;
     private int     score;
 
