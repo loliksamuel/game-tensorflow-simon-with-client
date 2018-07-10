@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Simon Says Judge</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.11.2"></script>
+  <script type="module" src="../lib/webcam.js"></script>
+  <script type="module" src="../lib/tf.js"></script>
+</head>
+<body>
+  
+  <script type="module">
+      import webcamUtils from '../lib/webcam.js';
+      import LearningModel from '../lib/tf.js';
+
+      const threshold = 0.8;
+      const colors = {
+        0: 'Pink',
+        1: 'Yellow',
+        2: 'Green',
+        3: 'Orange'
+      };
+
+      let canvas
+      let video
+      let model
+
+      const parseResults = (results) => {
+        const winner = results.filter(score => score > threshold);
+        const color = colors[results.indexOf(winner[0])];
+        const notice = color ? "I think it's " + color : "I'm not sure";
+        console.log(notice);
+      };
+
+      (async function () {
+        model = new LearningModel(4)
+        video = document.getElementById('webcam');
+        await webcamUtils.init(document.getElementById('webcam'));
+        canvas = webcamUtils.canvas;
+        await model.initialize();
+        document.body.appendChild(webcamUtils.canvas);
+        // document.getElementById('status').textContent = 'ready!'
+        const results = await detect();
+        parseResults(results)
+      })();
+
+      async function detect () {
+        webcamUtils.capture();
+        const imageData = model.captureImageFromCanvas(canvas)
+        const predictions = await model.test(imageData)
+        console.log(predictions)
+        return predictions;
+        // detect()
+      }
+
+  </script>
+
+  <video id="webcam" height="360" width="360" autoplay></video>
+
+</body>
+</html>
