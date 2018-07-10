@@ -2,6 +2,8 @@ package Tensorflow.model;
 
 
 import javax.persistence.Entity;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Game extends EntityBase{

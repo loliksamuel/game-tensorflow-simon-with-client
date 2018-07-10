@@ -16,7 +16,6 @@ import java.time.Instant;
 import java.util.UUID;
 
 @MappedSuperclass
-@Proxy(lazy = false)
 public abstract class EntityBase {
     @Id
     @Column(name = "id")
@@ -29,11 +28,11 @@ public abstract class EntityBase {
 
 
 
-    @JsonIgnore
+
     @CreatedBy
     private String createdBy;
 
-    @JsonIgnore
+
     @LastModifiedBy
     private String lastModifiedBy;
 

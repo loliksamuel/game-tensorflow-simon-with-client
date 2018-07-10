@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,55 +10,62 @@
   <script type="module" src="../lib/webcam.js"></script>
   <script type="module" src="../lib/tf.js"></script>
 </head>
+
 <body>
-  
+
   <script type="module">
-      import webcamUtils from '../lib/webcam.js';
-      import LearningModel from '../lib/tf.js';
+    import webcamUtils from '../lib/webcam.js';
+    import LearningModel from '../lib/tf.js';
 
-      const threshold = 0.8;
-      const colors = {
-        0: 'Pink',
-        1: 'Yellow',
-        2: 'Green',
-        3: 'Orange'
-      };
+    const threshold = 0.8;
+    const colors = {
+      0: '#pink',
+      1: '#yellow',
+      2: '#green',
+      3: '#orange'
+    };
 
-      let canvas
-      let video
-      let model
+    let canvas
+    let video
+    let model
 
-      const parseResults = (results) => {
-        const winner = results.filter(score => score > threshold);
-        const color = colors[results.indexOf(winner[0])];
-        const notice = color ? "I think it's " + color : "I'm not sure";
-        console.log(notice);
-      };
+    const parseResults = (results) => {
+      const winner = results.filter(score => score > threshold);
+      const color = colors[results.indexOf(winner[0])];
+      const notice = color ? "I think it's " + color : "I'm not sure";
+      return color;
+    };
 
-      (async function () {
-        model = new LearningModel(4)
-        video = document.getElementById('webcam');
-        await webcamUtils.init(document.getElementById('webcam'));
-        canvas = webcamUtils.canvas;
-        await model.initialize();
-        document.body.appendChild(webcamUtils.canvas);
-        // document.getElementById('status').textContent = 'ready!'
-        const results = await detect();
-        parseResults(results)
-      })();
+    (async function () {
+      model = new LearningModel(4)
+      video = document.getElementById('webcam');
+      await webcamUtils.init(document.getElementById('webcam'));
+      canvas = webcamUtils.canvas;
+      await model.initialize();
+      document.body.appendChild(webcamUtils.canvas);
+    })();
 
-      async function detect () {
-        webcamUtils.capture();
-        const imageData = model.captureImageFromCanvas(canvas)
-        const predictions = await model.test(imageData)
-        console.log(predictions)
-        return predictions;
-        // detect()
-      }
+    async function detect() {
+      webcamUtils.capture();
+      const imageData = model.captureImageFromCanvas(canvas)
+      const predictions = await model.test(imageData);
+      console.log(predictions);
+      return predictions;
+      // detect()
+    }
+
+    async function receiveMessage(event) {
+      const results = await detect();
+      const color = parseResults(results);
+      event.source.postMessage(color, "http://127.0.0.1:8080");
+    }
+
+    window.addEventListener("message", receiveMessage, false);
 
   </script>
 
-  <video id="webcam" height="250" width="240" autoplay></video>
+  <video id="webcam" height="250" width="250" autoplay></video>
 
 </body>
+
 </html>
