@@ -35,14 +35,14 @@ body {
   transition: border 0.1s linear;
 }
 
-#red, #green {
+#pink, #green {
   position: absolute;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
 }
 
-#red {
+#pink {
   top: 0;
 }
 
@@ -50,7 +50,7 @@ body {
   bottom: 0;
 }
 
-#yellow, #blue {
+#yellow, #orange {
   position: absolute;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -61,7 +61,7 @@ body {
   right: 0;
 }
 
-#blue {
+#orange {
   left: 0;
 }
 
@@ -93,20 +93,20 @@ body {
           animation: click 0.4s ease-in 1;
 }
 
-#red {
+#pink {
   border: #FF1493 solid 15px;
   color: #FF1493;
 }
-#red:hover {
+#pink:hover {
   background: #FF1493;
   color: #1E1E24;
 }
-#red:hover:active {
+#pink:hover:active {
   -webkit-transform: translateX(-50%) scale(1.1);
           transform: translateX(-50%) scale(1.1);
 }
 
-.clicked-red:before {
+.clicked-pink:before {
   display: block;
   content: '';
   opacity: 0;
@@ -121,20 +121,20 @@ body {
           animation: click 0.4s ease-in 1;
 }
 
-#blue {
+#orange {
   border: #D6580F solid 15px;
   color: #D6580F;
 }
-#blue:hover {
+#orange:hover {
   background: #D6580F;
   color: #1E1E24;
 }
-#blue:hover:active {
+#orange:hover:active {
   -webkit-transform: translateY(-50%) scale(1.1);
           transform: translateY(-50%) scale(1.1);
 }
 
-.clicked-blue:before {
+.clicked-orange:before {
   display: block;
   content: '';
   opacity: 0;
@@ -302,6 +302,7 @@ body {
   position: relative;
   top: 150px;
   left: 150px;
+  width: 250px;
 }
 
 .logo {
