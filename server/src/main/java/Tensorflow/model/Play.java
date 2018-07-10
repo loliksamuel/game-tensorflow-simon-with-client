@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 public class Play extends EntityBase{
 
 
+
+
     @ManyToOne
     @JoinColumn(name="game_id", nullable=false)
     private Game   game;
@@ -34,6 +36,12 @@ public class Play extends EntityBase{
         score = aScore;
     }
 
+    public Game getGame() {
+        return game;
+    }
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
 
 }
