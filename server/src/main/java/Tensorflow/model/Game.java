@@ -34,4 +34,5 @@ public class Game extends EntityBase{
     public void setSeq(String aSeq) {
         seq = aSeq;
     }
+
 }

@@ -133,7 +133,7 @@ public abstract class EntityBase {
 
     @Override
     public String toString() {
-        return getClass().getName() + ": " + getName();
+        return getClass().getName() + ": " + getId();
     }
 
 

@@ -1,4 +1,4 @@
-package Tensorflow.controllerGame;
+package Tensorflow.controller;
 
 
 import Tensorflow.model.Game;

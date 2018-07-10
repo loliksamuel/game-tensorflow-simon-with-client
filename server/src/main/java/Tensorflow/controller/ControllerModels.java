@@ -1,10 +1,8 @@
-package Tensorflow.controllerGame;
+package Tensorflow.controller;
 
-import Tensorflow.model.Game;
 import Tensorflow.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import Tensorflow.repo.RepoGame;
 import Tensorflow.repo.RepoModel;
 
 @RestController
