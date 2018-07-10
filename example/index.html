@@ -4,13 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Example</title>
+  <meta name="author" content="Alexander Chertkov">
+  <title>Simon Says Game in JavasScript with Camera</title>
+  <link rel="stylesheet" type="text/css" href="SimonStyle.css">
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.11.2"></script>
   <script type="module" src="../lib/webcam.js"></script>
   <script type="module" src="../lib/tf.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src='../lib/SimonScript.js'></script>
 </head>
 <body>
-  
+
   <script type="module">
 
       import webcamUtils from '../lib/webcam.js';
@@ -19,7 +23,7 @@
       let model
       let canvas
       let video
-  
+
       (async function () {
 
         const btn0 = document.getElementById('btn0')
@@ -68,17 +72,40 @@
         x++
         detect()
       }
-    
+
     </script>
 
 
-  <video id="webcam" height="360" width="360" autoplay></video>
+<!--
 
   <div id="status"></div>
   <button id="btn0">Sample as item #0</button>
   <button id="btn1">Sample as item #1</button>
   <button id="train">Train Model</button>
   <button id="start">Start detection</button>
+
+-->
+    <div class="logo"></div>
+  <div class="container">
+    <button id="red" class="simon">P</button>
+    <button id="blue" class="simon">O</button>
+    <button id="yellow" class="simon">Y</button>
+    <button id="green" class="simon">G</button>
+        <div class="webcam-container">
+            <video id="webcam" height="250" width="250" autoplay></video>
+        </div>
+  </div>
+  <div class="options">
+      <button class="start"><i class="ion-power"></i></button>
+      <div class="steps">
+          <div class="text">0</div>
+      </div>
+<!--
+      <button class="strict">easy</button>
+-->
+      <div class="status">simon</div>
+  </div>
+
 
 </body>
 </html>
