@@ -15,9 +15,24 @@
       import webcamUtils from '../lib/webcam.js';
       import LearningModel from '../lib/tf.js';
 
+      const threshold = 0.8;
+      const colors = {
+        0: 'Pink',
+        1: 'Yellow',
+        2: 'Green',
+        3: 'Orange'
+      };
+
       let canvas
       let video
       let model
+
+      const parseResults = (results) => {
+        const winner = results.filter(score => score > threshold);
+        const color = colors[results.indexOf(winner[0])];
+        const notice = color ? "I think it's " + color : "I'm not sure";
+        console.log(notice);
+      };
 
       (async function () {
         model = new LearningModel(4)
@@ -27,7 +42,8 @@
         await model.initialize();
         document.body.appendChild(webcamUtils.canvas);
         // document.getElementById('status').textContent = 'ready!'
-        detect()
+        const results = await detect();
+        parseResults(results)
       })();
 
       async function detect () {
@@ -35,7 +51,8 @@
         const imageData = model.captureImageFromCanvas(canvas)
         const predictions = await model.test(imageData)
         console.log(predictions)
-        detect()
+        return predictions;
+        // detect()
       }
 
   </script>
