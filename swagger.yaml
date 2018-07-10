@@ -1,0 +1,152 @@
+swagger: '2.0'
+info: 
+  description: "This is a Simon game that uses the camera to select the keys, based on tensor flow"
+  version: "0.0.1"
+  title: "PYGO"
+  termsOfService: "http://tikalk.com/terms"
+  contact: 
+    name: "Ofer"
+    url: "https://github.com/oskulsky/tensorSimon"
+    email: "ofers@tikalk.com"
+  license:
+    name: "MIT"
+    url: "http://opensource.org/licenses/MIT"
+host: "localhost"
+basePath: "/"
+tags: 
+- name: "games"
+  description: "A game has a sequence of color cards"
+- name: "play"
+  description: "a played game"
+schemes: 
+- "https"
+- "http"
+paths:
+  /games:
+    get:
+      tags: 
+      -  "games"
+      summary: "return list of games"
+      description: "Each game has a uuid"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              type: string
+    post:
+      tags: 
+      - "games"
+      summary: "create a new game"
+      description: "asks the server to create a new game"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: string
+            title: "new game id"
+  /games/{gameid}:
+    get:
+      tags: 
+      - "games"
+      summary: "return the permutation of the game with id game_id"
+      description: "the permutation is the x (50) colors order"
+      consumes:
+      - "application/xml"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "gameid"
+        description: "The id of the game"
+        required: true
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: string
+            title: "game sequence"
+  /plays/{playid}:
+    get:
+      tags: 
+      - play
+      summary: "get a specific play"
+      description: 
+      responses:
+        200:
+          description: OK
+    put:
+      tags: 
+      - play
+      summary: "save a play of this game"
+      description: "saves the state of the play"
+      consumes:
+      - "application/xml"
+      produces:
+      - "application/json"
+      parameters: 
+      - in: "path"
+        name: "gameid"
+        description: "The id of the game"
+        required: true
+      - in: "body"
+        name: "play"
+        description: "State of the play"
+        required: true
+        schema:
+          $ref: "#/definitions/Play"
+      responses:
+        200:
+          description: "OK"
+  /games/{gameid}/highscores:
+    get:
+      tags: 
+      - games
+      summary: "returns the top 10 scores of this game"
+      description: 
+      responses:
+        200:
+          description: OK
+          schema:
+  /games/{gameid}/highscores/{maxCount}:
+    get:
+      tags: 
+      - games
+      summary: returns the top scores of this game, limited by the number in the maxCount
+      description: 
+      responses:
+        200:
+          description: OK
+  /games/{gameid}/plays:
+    post:
+      tags: 
+      - games
+      - play
+      summary: "create a new play for game"
+      description: 
+      responses:
+        200:
+          description: OK
+  /plays:
+    get:
+      tags: 
+      - play
+      summary: "get all plays"
+    post:
+      tags: 
+      - play
+      summary: "create a new play (random game)"
+  /users/{user}/plays:
+    get:
+      tags: 
+      - play
+      summary: "get all plays of user"
