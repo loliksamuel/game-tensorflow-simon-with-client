@@ -86,7 +86,7 @@ public class ControllerPlays {
         int score = 0;
         String gameId = "";
         Play play = new Play();
-        play.setUserName("");
+        play.setUserName("sam");
         play.setScore(score);
         play.setGame(game);
 
